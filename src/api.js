@@ -84,6 +84,46 @@ module.exports = {
 		}
 	},
 
+	appendFile() {
+		let self = this;
+	
+		let path = self.config.path;
+		let encoding = self.config.encoding;
+		let writebuffer= self.writebuffer;
+	
+		try {
+			if (self.config.verbose) {
+				self.log('debug', 'Opening File: ' + path);
+			}
+
+			fs.open(path, 'a', (err, fd) => {
+				if (err) {
+					self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
+					self.log('error', 'Error opening file: ' + err);
+					self.stopInterval();
+				}
+				else {
+					self.fd = fd;
+					fs.write(fd, writebuffer, null, encoding, (err, written, str) => {
+						if (err) {
+							self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
+							self.log('error', 'Error writing file: ' + err);
+							self.stopInterval();
+						}
+						else {
+							self.updateStatus(InstanceStatus.Ok);
+							self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
+							self.checkVariables();
+						}
+					});
+					fs.close(fd);
+				}
+			});
+		}
+		catch(error) {
+			self.log('error', 'Error Writing File: ' + error);
+		}
+	},
 
 	readFileCustom(path, encoding, customVariable) {
 		let self = this;
