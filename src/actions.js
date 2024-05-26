@@ -12,6 +12,14 @@ module.exports = {
 			}
 		};
 
+		actions.writeFile = {
+			name: 'Write File Now',
+			options: [],
+			callback: async function (action) {
+				self.writeFile();
+			}
+		};
+
 		actions.readFileCustom = {
 			name: 'Read Custom File Path into Custom Variable',
 			options: [

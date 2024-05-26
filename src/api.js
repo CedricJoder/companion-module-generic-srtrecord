@@ -9,7 +9,9 @@ module.exports = {
 		
 		const rate = self.config.rate;
 
-		self.readFile();
+		// self.readFile();
+		self.updateStatus(InstanceStatus.Ok);
+					
 
 		if (rate > 0) {
 			if (self.config.verbose) {
@@ -51,6 +53,37 @@ module.exports = {
 			self.log('error', 'Error Reading File: ' + error);
 		}
 	},
+
+	writeFile() {
+		let self = this;
+	
+		let path = self.config.path;
+		let encoding = self.config.encoding;
+	
+		try {
+			if (self.config.verbose) {
+				self.log('debug', 'Opening File: ' + path);
+			}
+	
+			fs.writeFile(path, self.filecontents, {encoding:encoding}, (err) => {
+				if (err) {
+					self.updateStatus(InstanceStatus.BadConfig, 'Error Reading File');
+					self.log('error', 'Error writding file: ' + err);
+					self.stopInterval();
+				}
+				else {
+					self.updateStatus(InstanceStatus.Ok);
+				//	self.filecontents = data;
+					self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
+					self.checkVariables();
+				}
+			});
+		}
+		catch(error) {
+			self.log('error', 'Error Writing File: ' + error);
+		}
+	},
+
 
 	readFileCustom(path, encoding, customVariable) {
 		let self = this;

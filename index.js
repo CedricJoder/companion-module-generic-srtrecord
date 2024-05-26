@@ -25,8 +25,10 @@ class GenericFileReaderInstance extends InstanceBase {
 			...presets,			
 		})
 
-		this.filecontents = '';
+		this.filecontents = 'test';
 		this.datetime = '';
+		this.flag = 'r+';
+		this.fd = 0;
 
 		this.ENCODING_TYPES = [
 			{ id: 'utf8', label: 'utf8'},

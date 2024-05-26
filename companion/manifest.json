@@ -5,7 +5,7 @@
 	"description": "Opens a local file and pushes or pulls the contents into a variable for processing.",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-generic-filereader.git",
+	"repository": "git+https://github.com/bitfocus/companion-module-generic-filereadwrite.git",
 	"bugs": "https://github.com/bitfocus/companion-module-generic-filereader/issues",
 	"maintainers": [
 		{
@@ -22,7 +22,7 @@
 	},
 	"manufacturer": "Generic",
 	"products": [
-		"File Reader"
+		"File ReadWrite"
 	],
 	"keywords": [
 		"File"
