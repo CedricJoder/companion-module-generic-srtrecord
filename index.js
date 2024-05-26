@@ -25,7 +25,8 @@ class GenericFileReaderInstance extends InstanceBase {
 			...presets,			
 		})
 
-		this.filecontents = 'test';
+		this.filecontents = '';
+		this.writebuffer = '';
 		this.datetime = '';
 		this.flag = 'r+';
 		this.fd = 0;
