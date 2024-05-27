@@ -30,6 +30,25 @@ actions.appendFile = {
 		};
 
 
+		actions.setWritebuffer = {
+			name: 'Store data into buffer to write file later',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Data',
+					description: 'Data to store. Accepts variables',
+					id: 'data',
+					default: '',
+					useVariables: true
+				},
+			],
+			callback: async function (action) {
+				let data = await self.parseVariablesInString(action.options.data)
+				self.setWritebuffer(data);
+			}
+		};
+
+
 		actions.readFileCustom = {
 			name: 'Read Custom File Path into Custom Variable',
 			options: [
