@@ -13,12 +13,22 @@ module.exports = {
 		};
 
 		actions.writeFile = {
-			name: 'Write File Now',
+			name: 'Write File',
 			options: [],
 			callback: async function (action) {
 				self.writeFile();
 			}
 		};
+
+
+actions.appendFile = {
+			name: 'Append writebuffer to File ',
+			options: [],
+			callback: async function (action) {
+				self.appendFile();
+			}
+		};
+
 
 		actions.readFileCustom = {
 			name: 'Read Custom File Path into Custom Variable',
