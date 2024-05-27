@@ -84,6 +84,12 @@ module.exports = {
 		}
 	},
 
+
+	setWritebuffer(data) {
+		let self = this;
+  self.writebuffer = data;
+ },
+
 	appendFile() {
 		let self = this;
 	
