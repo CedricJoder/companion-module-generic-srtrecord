@@ -65,7 +65,7 @@ module.exports = {
 				self.log('debug', 'Opening File: ' + path);
 			}
 	
-			fs.writeFile(path, self.filecontents, {encoding:encoding}, (err) => {
+			fs.writeFile(path, self.writebuffer, {encoding:encoding}, (err) => {
 				if (err) {
 					self.updateStatus(InstanceStatus.BadConfig, 'Error Reading File');
 					self.log('error', 'Error writding file: ' + err);
