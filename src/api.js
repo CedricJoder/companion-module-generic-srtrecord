@@ -9,7 +9,7 @@ module.exports = {
 		
 		const rate = self.config.rate;
 
-		//self.readFile();
+		self.readFile();
 		self.updateStatus(InstanceStatus.Ok);
 					
 
