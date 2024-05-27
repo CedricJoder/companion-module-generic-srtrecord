@@ -9,7 +9,7 @@ module.exports = {
 		
 		const rate = self.config.rate;
 
-		// self.readFile();
+		//self.readFile();
 		self.updateStatus(InstanceStatus.Ok);
 					
 
@@ -73,7 +73,6 @@ module.exports = {
 				}
 				else {
 					self.updateStatus(InstanceStatus.Ok);
-				//	self.filecontents = data;
 					self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
 					self.checkVariables();
 				}
@@ -117,12 +116,12 @@ module.exports = {
 							self.stopInterval();
 						}
 						else {
-							self.updateStatus(InstanceStatus.Ok);
-							self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
+							      self.updateStatus(InstanceStatus.Ok);
 							self.checkVariables();
 						}
 					});
 					fs.close(fd);
+    self.readFile();
 				}
 			});
 		}
