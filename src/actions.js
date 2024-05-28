@@ -36,7 +36,7 @@ module.exports = {
 				let data = await self.parseVariablesInString(self.config.data);
 				self.startrecording(data);
 			}
-
+		};
 				
 
 		actions.setWritebuffer = {
