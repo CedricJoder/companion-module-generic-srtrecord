@@ -39,10 +39,6 @@ module.exports = {
 
 	startrecording(initialdata) {
 		let self = this; // required to have reference to outer `this`
-
-		if (self.config.verbose) {
-			self.log('debug', 'Starting Recording');
-		}
 	
 		if (self.running) {
 			if (self.config.verbose) {
@@ -55,6 +51,14 @@ module.exports = {
 				self.log('debug', 'Starting Recording');
 			}
 			self.starttime = new Date.getTime();
+			self.path = await self.parseVariablesInString(self.config.path)
+			if (self.config.apdate)	{
+				self.path.append('_', new Date(self.starttime).toISOString().substring(0,10)));
+			}
+			if (self.config.aptime) {
+				self.path.append('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
+			}
+			
 			self.running = 1;
 			self.subnumber = 1;
 			self.previoustime = '00:00:00,000';
@@ -94,7 +98,7 @@ module.exports = {
 	readFile() {
 		let self = this;
 	
-		let path = self.config.path;
+		let path = self.path;
 		let encoding = self.config.encoding;
 	
 		try {
@@ -122,7 +126,7 @@ module.exports = {
 	clearFile() {
 		let self = this;
 	
-		let path = self.config.path;
+		let path = self.path;
 		let encoding = self.config.encoding;
 	
 		try {
@@ -154,7 +158,7 @@ module.exports = {
 	appendFile(data) {
 		let self = this;
 	
-		let path = self.config.path;
+		let path = self.path;
 		let encoding = self.config.encoding;
 	
 		try {
@@ -229,14 +233,4 @@ module.exports = {
 			self.log('error', 'Error Reading Line Number: ' + error);
 		}
 	},
-
-	stopInterval() {
-		let self = this; // required to have reference to outer `this`
-
-		if (self.config.verbose) {
-			self.log('debug', 'Stopping File Read Interval.');
-		}
-		clearInterval(self.INTERVAL);
-		self.INTERVAL = null;
-	}
 }
