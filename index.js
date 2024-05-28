@@ -13,8 +13,6 @@ class GenericFileReaderInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 
-		this.INTERVAL = null;
-
 		// Assign the methods from the listed files to this class
 		Object.assign(this, {
 			...configFields,
@@ -26,6 +24,7 @@ class GenericFileReaderInstance extends InstanceBase {
 		})
 
 		this.filecontents = '';
+		this.path = '';
 		this.running = false;
 		this.starttime = 0;
 		this.subnumber = 1;
