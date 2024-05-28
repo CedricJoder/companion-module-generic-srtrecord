@@ -51,7 +51,7 @@ module.exports = {
 				self.log('debug', 'Starting Recording');
 			}
 			self.starttime = new Date().getTime();
-			self.path = await self.parseVariablesInString(self.config.path)
+			self.path = self.parseVariablesInString(self.config.path)
 				if (self.config.apdate)	{
 					self.path.append('_', new Date(self.starttime).toISOString().substring(0,10)));
 				}
