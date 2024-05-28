@@ -22,10 +22,10 @@ module.exports = {
 					self.updateStatus(InstanceStatus.Ok);
 					fs.close(fd, (err) => {
 						if (err) {
-							self.updateStatus (IsntanceStatus.BadConfig, 'Error Closing File');
+							self.updateStatus (InstanceStatus.BadConfig, 'Error Closing File');
 							self.log('error', 'Error closing file : '+ err);
 						}
-					}
+					});
 				}
 			});
 		}
