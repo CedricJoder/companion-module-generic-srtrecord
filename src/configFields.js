@@ -8,7 +8,7 @@ module.exports = {
 				id: 'info',
 				width: 12,
 				label: 'Information',
-				value: 'This module reads a file and puts the contents into a Variable.'
+				value: 'This module records a specified variable and stores the timestamped values in a text file, with a srt subtitle format.'
 			},
 			{
 				type: 'textinput',
@@ -17,6 +17,21 @@ module.exports = {
 				label: 'File Path',
 				default: ''
 			},
+
+			{
+				type: 'checkbox',
+				id: 'apdate',
+				label: 'Append Date',
+				default: true
+			},
+
+			{
+				type: 'checkbox',
+				id: 'aptime',
+				label: 'Append Time',
+				default: true
+			},
+
 			{
 				type: 'dropdown',
 				id: 'encoding',
