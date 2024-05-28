@@ -5,6 +5,7 @@ module.exports = {
 			{ name: 'File Contents', variableId: 'contents'},
 			{ name: 'Current Sub Number', variableId: 'subnumber'},
 			{ name: 'Current Value', variableId: 'currentvalue'},
+			{ name: 'Recording Start Time', variableId: 'starttime'},
 		]
 
 		this.setVariableDefinitions(variables);
@@ -18,6 +19,7 @@ module.exports = {
 			variableObj['contents'] = this.filecontents;
 			variableObj['subnumber'] = this.subnumber;
 			variableObj['currentvalue'] = this.currentvalue;
+			variableObj['starttime'] = new Date(this.starttime).toISOString.substring(11,19);
 
 			this.setVariableValues(variableObj);
 		}
