@@ -29,7 +29,7 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.running = false;
 		this.starttime = 0;
 		this.subnumber = 1;
-		this.previoustime = '00:00:00,000';
+		this.previoustime = 0;
 		this.previousvalue = '';
 		this.currentvalue = '';
 
