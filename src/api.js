@@ -23,7 +23,7 @@ module.exports = {
 		self.previousvalue = initialdata;
 	},
 
-	newdata(data) {
+	writedata(data) {
 		let self = this; // required to have reference to outer `this`
 
 		let time = new Date().getTime()-self.starttime;
@@ -38,6 +38,13 @@ module.exports = {
 		self.previoustime = time;
 	},
 	
+
+	stoprecording(data) {
+		self.writedata(data);
+		self.running = 0;
+	},
+
+
 
 	readFile() {
 		let self = this;
