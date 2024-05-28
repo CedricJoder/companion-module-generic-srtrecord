@@ -28,16 +28,15 @@ module.exports = {
 			}
 		};
 
-		
 		actions.startRecording = {
 			name: 'Start Recording',
-			option: [],
+			options: [],
 			callback: async function (action) {
 				let data = await self.parseVariablesInString(self.config.data);
 				self.startrecording(data);
 			}
 		};
-				
+
 
 		actions.setWritebuffer = {
 			name: 'Store data into buffer to write file later',
