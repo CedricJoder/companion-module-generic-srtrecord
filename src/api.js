@@ -13,6 +13,17 @@ module.exports = {
 		self.updateStatus(InstanceStatus.Ok);
 	},
 
+	startrecording() {
+		let self = this; // required to have reference to outer `this`
+
+		self.starttime = new Date.getTime();
+		self.running = 1;
+		self.subnumber = 1;
+		self.previoustime = '00:00:00,000';
+		self.previousvalue = await self.parseVariablesInString(self.data);
+	},
+	
+
 	readFile() {
 		let self = this;
 	
@@ -78,12 +89,11 @@ module.exports = {
   self.writebuffer = data;
  },
 
-	appendFile() {
+	appendFile(data) {
 		let self = this;
 	
 		let path = self.config.path;
 		let encoding = self.config.encoding;
-		let writebuffer= self.writebuffer;
 	
 		try {
 			if (self.config.verbose) {
@@ -98,7 +108,7 @@ module.exports = {
 				}
 				else {
 					self.fd = fd;
-					fs.write(fd, writebuffer, null, encoding, (err, written, str) => {
+					fs.write(fd, data, null, encoding, (err, written, str) => {
 						if (err) {
 							self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
 							self.log('error', 'Error writing file: ' + err);
