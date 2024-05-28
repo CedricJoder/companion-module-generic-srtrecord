@@ -11,17 +11,6 @@ module.exports = {
 
 		self.readFile();
 		self.updateStatus(InstanceStatus.Ok);
-					
-
-		if (rate > 0) {
-			if (self.config.verbose) {
-				self.log('debug', 'Creating Interval. File will be read every ' + rate + ' ms.');
-			}
-			self.INTERVAL = setInterval(self.readFile.bind(self), rate);
-		}
-		else {
-			self.log('info', 'Retry Rate is 0. Module will open file one time and not read it again unless manually activated.');
-		}
 	},
 
 	readFile() {
@@ -73,7 +62,7 @@ module.exports = {
 				}
 				else {
 					self.updateStatus(InstanceStatus.Ok);
-					self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
+					self.datetime = new Date().toISOString().replace('T', '_').substr(0, 19);
 					self.checkVariables();
 				}
 			});
