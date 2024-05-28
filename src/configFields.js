@@ -13,7 +13,7 @@ module.exports = {
 
 			{
 				type: 'textinput',
-				id: 'pdata',
+				id: 'data',
 				width: 6,
 				label: 'Data to Record',
 				useVariables: true,
@@ -49,13 +49,6 @@ module.exports = {
 				label: 'File Encoding',
 				default: 'utf8',
 				choices: this.ENCODING_TYPES
-			},
-			{
-				type: 'number',
-				id: 'rate',
-				width: 6,
-				label: 'Re-Read Rate (in ms) (set to 0 to read file once and not again unless manually activated)',
-				default: 60000
 			},
 			{
 				type: 'static-text',
