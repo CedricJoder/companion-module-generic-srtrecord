@@ -3,8 +3,8 @@ module.exports = {
 		let variables = [
 			{ name: 'File Path', variableId: 'path'},
 			{ name: 'File Contents', variableId: 'contents'},
-			{ name: 'Buffer to Write', variableId: 'writebuffer'},
-			{ name: 'Last Date/Time Read', variableId: 'datetime'},
+			{ name: 'Current Sub Number', variableId: 'subnumber'},
+			{ name: 'Current Value', variableId: 'currentvalue'},
 		]
 
 		this.setVariableDefinitions(variables);
@@ -16,8 +16,8 @@ module.exports = {
 
 			variableObj['path'] = this.config.path;
 			variableObj['contents'] = this.filecontents;
-			variableObj['writebuffer'] = this.writebuffer;
-			variableObj['datetime'] = this.datetime;
+			variableObj['subnumber'] = this.subnumber;
+			variableObj['currentvalue'] = this.currentvalue;
 
 			this.setVariableValues(variableObj);
 		}
