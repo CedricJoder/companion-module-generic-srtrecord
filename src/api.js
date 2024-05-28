@@ -25,6 +25,9 @@ module.exports = {
 							self.updateStatus (InstanceStatus.BadConfig, 'Error Closing File');
 							self.log('error', 'Error closing file : '+ err);
 						}
+						else{
+							self.updateStatus(InstanceStatus.Ok);
+						}
 					});
 				}
 			});
@@ -32,11 +35,6 @@ module.exports = {
 		catch(error) {
 			self.log('error', 'Error Opening File: ' + error);
 		}
-
-		
-		fs.open(
-		self.readFile();
-		self.updateStatus(InstanceStatus.Ok);
 	},
 
 	startrecording(initialdata) {
