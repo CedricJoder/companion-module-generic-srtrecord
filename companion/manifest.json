@@ -1,16 +1,16 @@
 {
-	"id": "generic-filereadwrite",
-	"name": "generic-filereadwrite",
-	"shortname": "generic-filereadwrite",
-	"description": "Opens a local file and pushes or pulls the contents into a variable for processing.",
+	"id": "generic-srtrecord",
+	"name": "generic-srtrecord",
+	"shortname": "generic-srtrecord",
+	"description": "Record timestamped values of a variable into a file.",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-generic-filereadwrite.git",
-	"bugs": "https://github.com/bitfocus/companion-module-generic-filereader/issues",
+	"repository": "git+https://github.com/CedricJodee/companion-module-generic-srtrecord.git",
+	"bugs": "https://github.com/bitfocus/companion-module-generic-srtrecord/issues",
 	"maintainers": [
 		{
-			"name": "Joseph Adams",
-			"email": "josephdadams@gmail.com"
+			"name": "Cedric Jodee",
+			"email": "cedric.joder@gmail.com"
 		}
 	],
 	"legacyIds": [],
@@ -22,7 +22,7 @@
 	},
 	"manufacturer": "Generic",
 	"products": [
-		"File ReadWrite"
+		"Srt Record"
 	],
 	"keywords": [
 		"File"
