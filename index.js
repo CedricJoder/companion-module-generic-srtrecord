@@ -26,14 +26,12 @@ class GenericFileReaderInstance extends InstanceBase {
 		})
 
 		this.filecontents = '';
-		this.writebuffer = '';
-		this.datetime = '';
-		this.running = 0;
+		this.running = false;
 		this.starttime = 0;
 		this.subnumber = 1;
 		this.previoustime = '00:00:00,000';
 		this.previousvalue = '';
-		this.fd = 0;
+		this.currentvalue = '';
 
 		this.ENCODING_TYPES = [
 			{ id: 'utf8', label: 'utf8'},
@@ -68,12 +66,12 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.updateStatus(InstanceStatus.Connecting, 'Opening File...');
 		this.openFile();
 	}
-/*
+
 	async destroy() {
 		//close out any connections
 		this.debug('destroy', this.id);
 	}
-*/
+
 }
 
 runEntrypoint(GenericFileReaderInstance, UpgradeScripts)
