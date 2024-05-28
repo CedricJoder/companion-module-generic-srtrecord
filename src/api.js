@@ -28,11 +28,12 @@ module.exports = {
 
 		let time = new Date().getTime()-self.starttime;
 		self.appendFile(self.subnumber.toString().concat('\n', 
-								 new Date(self.previoustime).toISOString()..substring(11,23).replace('.', ','),
+								 new Date(self.previoustime).toISOString().substring(11,23).replace('.', ','),
 								 ' --> ',
-								 new Date(time-1).toISOString()..substring(11,23).replace('.', ','),
-								 '\n'\,
-								 data.toString());
+								 new Date(time-1).toISOString().substring(11,23).replace('.', ','),
+								 '\n',
+								 data.toString(),
+								'\n\n'));
 		self.subnumber += 1;
 		self.previoustime = time;
 	},
