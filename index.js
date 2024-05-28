@@ -28,7 +28,10 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.filecontents = '';
 		this.writebuffer = '';
 		this.datetime = '';
-		this.flag = 'r+';
+		this.running = 0;
+		this.subnumber = 1;
+		this.previoustime = '00:00:00,000';
+		this.previousvalue = '';
 		this.fd = 0;
 
 		this.ENCODING_TYPES = [
@@ -53,8 +56,6 @@ class GenericFileReaderInstance extends InstanceBase {
 
 		this.updateStatus(InstanceStatus.Ok);
 
-		this.stopInterval();
-
 		this.initActions();
 		this.initFeedbacks();
 		this.initVariables();
@@ -63,12 +64,6 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.checkVariables();
 		this.checkFeedbacks();
 
-		// Quickly check if certain config values are present and continue setup
-		if (this.config.path !== '') {
-			if (this.INTERVAL) {
-				this.stopInterval();
-			}
-
 			this.updateStatus(InstanceStatus.Connecting, 'Opening File...');
 			this.openFile();
 		}
@@ -76,7 +71,6 @@ class GenericFileReaderInstance extends InstanceBase {
 
 	async destroy() {
 		//close out any connections
-		this.stopInterval();
 
 		this.debug('destroy', this.id);
 	}
