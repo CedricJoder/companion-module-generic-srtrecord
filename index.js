@@ -72,7 +72,6 @@ class GenericFileReaderInstance extends InstanceBase {
 
 	async destroy() {
 		//close out any connections
-
 		this.debug('destroy', this.id);
 	}
 }
