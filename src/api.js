@@ -53,7 +53,7 @@ module.exports = {
 			self.starttime = new Date().getTime();
 			self.path = self.parseVariablesInString(self.config.path)
 				if (self.config.apdate)	{
-					self.path.append('_', new Date(self.starttime).toISOString().substring(0,10)));
+					self.path.append('_', new Date(self.starttime).toISOString().substring(0,10));
 				}
 				if (self.config.aptime) {
 					self.path.append('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
