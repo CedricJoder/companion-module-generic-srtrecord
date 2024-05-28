@@ -8,8 +8,18 @@ module.exports = {
 				id: 'info',
 				width: 12,
 				label: 'Information',
-				value: 'This module records a specified variable and stores the timestamped values in a text file, with a srt subtitle format.'
+				value: 'This module records a specified data and stores the timestamped values in a text file, with a srt subtitle format.'
 			},
+
+			{
+				type: 'textinput',
+				id: 'pdata',
+				width: 6,
+				label: 'Data to Record',
+				useVariables: true,
+				default: ''
+			},
+
 			{
 				type: 'textinput',
 				id: 'path',
