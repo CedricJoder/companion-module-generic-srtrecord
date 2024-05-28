@@ -170,7 +170,7 @@ module.exports = {
 				else {
 						self.updateStatus(InstanceStatus.Ok);
 				}
-			}
+			});
 		}
 		catch(error) {
 			self.log('error', 'Error Writing File: ' + error);
