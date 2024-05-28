@@ -13,14 +13,28 @@ module.exports = {
 		self.updateStatus(InstanceStatus.Ok);
 	},
 
-	startrecording() {
+	startrecording(initialdata) {
 		let self = this; // required to have reference to outer `this`
 
 		self.starttime = new Date.getTime();
 		self.running = 1;
 		self.subnumber = 1;
 		self.previoustime = '00:00:00,000';
-		self.previousvalue = await self.parseVariablesInString(self.data);
+		self.previousvalue = initialdata;
+	},
+
+	newdata(data) {
+		let self = this; // required to have reference to outer `this`
+
+		let time = new Date().getTime()-self.starttime;
+		self.appendFile(self.subnumber.toString().concat('\n', 
+								 new Date(self.previoustime).toISOString()..substring(11,23).replace('.', ','),
+								 ' --> ',
+								 new Date(time-1).toISOString()..substring(11,23).replace('.', ','),
+								 '\n'\,
+								 data.toString());
+		self.subnumber += 1;
+		self.previoustime = time;
 	},
 	
 
