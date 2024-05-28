@@ -2,14 +2,14 @@
 	"id": "generic-srtrecord",
 	"name": "generic-srtrecord",
 	"shortname": "generic-srtrecord",
-	"description": "Record timestamped values of a variable into a file.",
-	"version": "0.0.0",
+	"description": "Record timestamped values of a variable into a srt formatted file.",
+	"version": "0.1",
 	"license": "MIT",
-	"repository": "git+https://github.com/CedricJodee/companion-module-generic-srtrecord.git",
+	"repository": "git+https://github.com/CedricJoder/companion-module-generic-srtrecord.git",
 	"bugs": "https://github.com/bitfocus/companion-module-generic-srtrecord/issues",
 	"maintainers": [
 		{
-			"name": "Cedric Jodee",
+			"name": "Cedric Joder",
 			"email": "cedric.joder@gmail.com"
 		}
 	],
