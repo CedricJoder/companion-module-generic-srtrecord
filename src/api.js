@@ -6,9 +6,35 @@ const readline = require('readline');
 module.exports = {
 	openFile() {
 		let self = this; // required to have reference to outer `this`
+		let path = self.config.path;
 		
-		const rate = self.config.rate;
+		try {
+			if (self.config.verbose) {
+				self.log('debug', 'Opening File: ' + path);
+			}
+	
+			fs.open(path, 'w+', (err, fd) => {
+				if (err) {
+					self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
+					self.log('error', 'Error opening file: ' + err);
+				}
+				else {
+					self.updateStatus(InstanceStatus.Ok);
+					fs.close(fd, (err) => {
+						if (err) {
+							self.updateStatus (IsntanceStatus.BadConfig, 'Error Closing File');
+							self.log('error', 'Error closing file : '+ err);
+						}
+					}
+				}
+			});
+		}
+		catch(error) {
+			self.log('error', 'Error Opening File: ' + error);
+		}
 
+		
+		fs.open(
 		self.readFile();
 		self.updateStatus(InstanceStatus.Ok);
 	},
@@ -16,10 +42,20 @@ module.exports = {
 	startrecording(initialdata) {
 		let self = this; // required to have reference to outer `this`
 
+		if (self.config.verbose) {
+			self.log('debug', 'Starting Recording');
+		}
+	
 		if (self.running) {
-			self.writedata(initialdata);
+			if (self.config.verbose) {
+				self.log('debug', 'Tried to start already started recording');
+			}
+			//self.writedata(initialdata);
 		}
 		else {
+			if (self.config.verbose) {
+				self.log('debug', 'Starting Recording');
+			}
 			self.starttime = new Date.getTime();
 			self.running = 1;
 			self.subnumber = 1;
@@ -72,12 +108,10 @@ module.exports = {
 				if (err) {
 					self.updateStatus(InstanceStatus.BadConfig, 'Error Reading File');
 					self.log('error', 'Error reading file: ' + err);
-					self.stopInterval();
 				}
 				else {
 					self.updateStatus(InstanceStatus.Ok);
 					self.filecontents = data;
-					self.datetime = new Date().toISOString().replace('T', ' ').substr(0, 19);
 					self.checkVariables();
 				}
 			});
@@ -100,14 +134,11 @@ module.exports = {
 	
 			fs.writeFile(path, '', {encoding:encoding}, (err) => {
 				if (err) {
-					self.updateStatus(InstanceStatus.BadConfig, 'Error Reading File');
+					self.updateStatus(InstanceStatus.BadConfig, 'Error Writing File');
 					self.log('error', 'Error writing file: ' + err);
-					self.stopInterval();
 				}
 				else {
 					self.updateStatus(InstanceStatus.Ok);
-					self.datetime = new Date().toISOString().replace('T', '_').substr(0, 19);
-					self.checkVariables();
 				}
 			});
 		}
@@ -133,29 +164,15 @@ module.exports = {
 				self.log('debug', 'Opening File: ' + path);
 			}
 
-			fs.open(path, 'a', (err, fd) => {
+			fs.appendFile(path, data, {encoding:encoding}, (err) => {
 				if (err) {
-					self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
-					self.log('error', 'Error opening file: ' + err);
-					self.stopInterval();
+					self.updateStatus(InstanceStatus.BadConfig, 'Error Writing File');
+					self.log('error', 'Error writing file: ' + err);
 				}
 				else {
-					self.fd = fd;
-					fs.write(fd, data, null, encoding, (err, written, str) => {
-						if (err) {
-							self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
-							self.log('error', 'Error writing file: ' + err);
-							self.stopInterval();
-						}
-						else {
-							      self.updateStatus(InstanceStatus.Ok);
-							self.checkVariables();
-						}
-					});
-					fs.close(fd);
-    self.readFile();
+						self.updateStatus(InstanceStatus.Ok);
 				}
-			});
+			}
 		}
 		catch(error) {
 			self.log('error', 'Error Writing File: ' + error);
