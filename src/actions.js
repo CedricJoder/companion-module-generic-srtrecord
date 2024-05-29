@@ -4,14 +4,15 @@ module.exports = {
 		let self = this; // required to have reference to outer `this`
 		let actions = {};
 
-		actions.writeFile = {
-			name: 'Write File',
+/*
+		actions.readFile = {
+			name: 'Read File',
 			options: [],
 			callback: async function (action) {
-				self.writeFile();
+				self.readFile();
 			}
 		};
-
+*/
 
 		actions.startRecording = {
 			name: 'Start Recording',
