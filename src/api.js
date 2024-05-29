@@ -19,7 +19,7 @@ module.exports = {
 					path.append('_', new Date().toISOString().substring(0,10));
 				}
 
-				if (fs.existsSync(self.parseVariablesInString(path)) {
+				if (fs.existsSync(self.parseVariablesInString(path))) {
 					self.updateStatus(InstanceStatus.BadConfig, 'File exists, overwrite');
 					self.log('error', 'File already exists ! Recording will overwrite.');
 				}
