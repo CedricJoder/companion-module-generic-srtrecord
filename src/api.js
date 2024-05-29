@@ -61,6 +61,7 @@ module.exports = {
 			self.previoustime = 0;
 			self.currentvalue = initialdata;
 			self.checkVariables();
+			self.clearFile(self.path);
 		}
 	},
 
@@ -90,7 +91,7 @@ module.exports = {
 
 	stoprecording(data) {
 		self.writedata(data);
-		self.running = 0;
+		self.running = false;
 	},
 
 
@@ -149,12 +150,7 @@ module.exports = {
 		}
 	},
 
-/*
-	setWritebuffer(data) {
-		let self = this;
-		self.writebuffer = data;
-	},
-*/
+
 	appendFile(data) {
 		let self = this;
 	
@@ -181,28 +177,7 @@ module.exports = {
 		}
 	},
 
-	readFileCustom(path, encoding, customVariable) {
-		let self = this;
-
-		try {
-			if (self.config.verbose) {
-				self.log('debug', 'Opening File: ' + path);
-			}
 	
-			fs.readFile(path, encoding, (err, data) => {
-				if (err) {
-					self.log('error', 'Error reading custom file path: ' + err);
-				}
-				else {
-					self.setCustomVariableValue(customVariable, data);
-				}
-			});
-		}
-		catch(error) {
-			self.log('error', 'Error Reading custom file path: ' + error);
-		}
-	},
-
 	readLine(lineNumber, path, customVariable) {
 		let self = this;
 
