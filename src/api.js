@@ -4,8 +4,9 @@ const fs = require('fs');
 const readline = require('readline');
 
 module.exports = {
-	checkFile(path) {
+	checkFile(filepath) {
 		let self = this; // required to have reference to outer `this`
+		let path = filepath;
 		
 		try {
 			if (self.config.apdate)	{
@@ -31,6 +32,8 @@ module.exports = {
 			if (self.config.verbose) {
 				self.log('debug', 'Checked File : ' + path);
 			}
+			self.path = filepath;
+			self.checkVariables();
 		}
 		catch(error) {
 			self.log('error', 'Error Checking File: ' + error);
