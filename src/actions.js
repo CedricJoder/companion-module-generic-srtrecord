@@ -4,14 +4,6 @@ module.exports = {
 		let self = this; // required to have reference to outer `this`
 		let actions = {};
 
-		actions.readFile = {
-			name: 'Read File Now',
-			options: [],
-			callback: async function (action) {
-				self.readFile();
-			}
-		};
-
 		actions.writeFile = {
 			name: 'Write File',
 			options: [],
