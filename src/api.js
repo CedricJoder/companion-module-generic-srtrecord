@@ -43,34 +43,37 @@ module.exports = {
 	startrecording(initialdata) {
 		let self = this; // required to have reference to outer `this`
 	
-		if (self.running) {
-			if (self.config.verbose) {
-				self.log('debug', 'Tried to start already started recording');
+		try {
+			if (self.running) {
+				if (self.config.verbose) {
+					self.log('debug', 'Tried to start already started recording');
+				}
+				//self.writedata(initialdata);
 			}
-			//self.writedata(initialdata);
-		}
-		else {
-			if (self.config.verbose) {
-				self.log('debug', 'Starting Recording');
-			}
-			self.starttime = new Date().getTime();
-			self.path = self.parseVariablesInString(self.config.path)
+			else {
+				if (self.config.verbose) {
+					self.log('debug', 'Starting Recording');
+				}
+				self.starttime = new Date().getTime();
 				if (self.config.apdate)	{
-					self.path.append('_', new Date(self.starttime).toISOString().substring(0,10));
-				}
-				if (self.config.aptime) {
-					self.path.append('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
-				}
-			self.running = true;
-			self.subnumber = 1;
-			self.previoustime = 0;
-			self.currentvalue = initialdata;
-			self.checkVariables();
-			self.clearFile(self.path);
+					self.path = self.path.concat('_', new Date(self.starttime).toISOString().substring(0,10));
+					}
+					if (self.config.aptime) {
+						self.path = self.path.concat('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
+					}
+				self.running = true;
+				self.subnumber = 1;
+				self.previoustime = 0;
+				self.currentvalue = initialdata;
+				self.checkVariables();
+				self.clearFile(self.path);
 			
-			if (self.config.verbose) {
-				self.log('debug', 'Recording to : ' + self.path);
-			}
+				if (self.config.verbose) {
+					self.log('debug', 'Recording to : ' + self.path);
+				}
+		}
+		catch(error) {
+			self.log('error', 'Error Starting Recording : ' + error);
 		}
 	},
 
