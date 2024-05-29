@@ -26,6 +26,8 @@ module.exports = {
 				else {
 					self.updateStatus(InstanceStatus.Ok);
 				}
+			else {
+				self.updateStatus(InstanceStatus.Ok);
 			}
 		}
 		catch(error) {
