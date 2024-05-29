@@ -56,9 +56,9 @@ module.exports = {
 				if (self.config.aptime) {
 					self.path.append('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
 				}
-			self.running = 1;
+			self.running = true;
 			self.subnumber = 1;
-			self.previoustime = '00:00:00,000';
+			self.previoustime = 0;
 			self.previousvalue = initialdata;
 			self.checkVariables();
 		}
@@ -67,9 +67,8 @@ module.exports = {
 	writedata(data) {
 		let self = this; // required to have reference to outer `this`
 
-		let time = new Date().getTime()-self.starttime;
-
 		if (self.running) {
+			let time = new Date().getTime()-self.starttime;
 			self.appendFile(self.subnumber.toString().concat('\n', 
 									 new Date(self.previoustime).toISOString().substring(11,23).replace('.', ','),
 									 ' --> ',
@@ -77,12 +76,15 @@ module.exports = {
 									 '\n',
 									 data.toString(),
 									'\n\n'));
-			self.subnumber += 1;
+			self.subnumber++;
 			self.previoustime = time;
 		}
 		else {
 			self.log('error', 'Recording not started');
 		}
+
+		self.currentvalue = data;
+		self.checkVariables();
 	},
 	
 
