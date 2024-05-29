@@ -31,7 +31,7 @@ module.exports = {
 			}
 		}
 		catch(error) {
-			self.log('error', 'Error Opening File: ' + error);
+			self.log('error', 'Error Checking File: ' + error);
 		}
 	},
 
