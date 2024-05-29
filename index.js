@@ -62,12 +62,13 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.checkVariables();
 		this.checkFeedbacks();
 
-		this.updateStatus(InstanceStatus.Connecting, 'Opening File...');
-		this.openFile();
+		this.updateStatus(InstanceStatus.Connecting, 'Checking File...');
+		this.checkFile();
 	}
 
 	async destroy() {
 		//close out any connections
+		this.stoprecording('');
 		this.debug('destroy', this.id);
 	}
 
