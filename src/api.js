@@ -59,7 +59,7 @@ module.exports = {
 			self.running = true;
 			self.subnumber = 1;
 			self.previoustime = 0;
-			self.previousvalue = initialdata;
+			self.currentvalue = initialdata;
 			self.checkVariables();
 		}
 	},
