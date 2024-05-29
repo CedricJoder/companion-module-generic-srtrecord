@@ -4,22 +4,20 @@ const fs = require('fs');
 const readline = require('readline');
 
 module.exports = {
-	checkFile() {
+	checkFile(path) {
 		let self = this; // required to have reference to outer `this`
-		let path = self.config.path;
 		
 		try {
+			if (self.config.apdate)	{
+				path = path.concat('_', new Date().toISOString().substring(0,10));
+			}
+			
 			if (self.config.verbose) {
 				self.log('debug', 'Checking File: ' + path);
 			}
 
 			if (!self.config.aptime) {
-				let path = self.parseVariablesInString(self.config.path);
-				if (self.config.apdate)	{
-					path.append('_', new Date().toISOString().substring(0,10));
-				}
-
-				if (fs.existsSync(self.parseVariablesInString(path))) {
+				if (fs.existsSync(path)) {
 					self.updateStatus(InstanceStatus.BadConfig, 'File exists, overwrite');
 					self.log('error', 'File already exists ! Recording will overwrite.');
 				}
@@ -29,6 +27,9 @@ module.exports = {
 			}
 			else {
 				self.updateStatus(InstanceStatus.Ok);
+			}
+			if (self.config.verbose) {
+				self.log('debug', 'Checked File : ' + path);
 			}
 		}
 		catch(error) {
@@ -63,6 +64,10 @@ module.exports = {
 			self.currentvalue = initialdata;
 			self.checkVariables();
 			self.clearFile(self.path);
+			
+			if (self.config.verbose) {
+				self.log('debug', 'Recording to : ' + self.path);
+			}
 		}
 	},
 

@@ -9,7 +9,7 @@ const variables = require('./src/variables');
 const feedbacks = require('./src/feedbacks');
 const presets = require('./src/presets');
 
-class GenericFileReaderInstance extends InstanceBase {
+class GenericSrtRecordInstance extends InstanceBase {
 	constructor(internal) {
 		super(internal)
 
@@ -63,7 +63,8 @@ class GenericFileReaderInstance extends InstanceBase {
 		this.checkFeedbacks();
 
 		this.updateStatus(InstanceStatus.Connecting, 'Checking File...');
-		this.checkFile();
+		let path = await this.parseVariablesInString(this.config.path);
+		this.checkFile(path);
 	}
 
 	async destroy() {
@@ -74,4 +75,4 @@ class GenericFileReaderInstance extends InstanceBase {
 
 }
 
-runEntrypoint(GenericFileReaderInstance, UpgradeScripts)
+runEntrypoint(GenericSrtRecordInstance, UpgradeScripts)

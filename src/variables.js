@@ -19,7 +19,7 @@ module.exports = {
 			variableObj['contents'] = this.filecontents;
 			variableObj['subnumber'] = this.subnumber;
 			variableObj['currentvalue'] = this.currentvalue;
-			variableObj['starttime'] = new Date(this.starttime).toISOString.substring(11,19);
+			variableObj['starttime'] = new Date(this.starttime).toISOString().substring(11,19);
 
 			this.setVariableValues(variableObj);
 		}
