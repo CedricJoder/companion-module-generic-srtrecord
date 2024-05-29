@@ -4,33 +4,28 @@ const fs = require('fs');
 const readline = require('readline');
 
 module.exports = {
-	openFile() {
+	checkFile() {
 		let self = this; // required to have reference to outer `this`
 		let path = self.config.path;
 		
 		try {
 			if (self.config.verbose) {
-				self.log('debug', 'Opening File: ' + path);
+				self.log('debug', 'Checking File: ' + path);
 			}
-	
-			fs.open(path, 'w+', (err, fd) => {
-				if (err) {
-					self.updateStatus(InstanceStatus.BadConfig, 'Error Opening File');
-					self.log('error', 'Error opening file: ' + err);
+
+			let path = self.parseVariablesInString(self.config.path);
+			if (self.config.apdate)	{
+					path.append('_', new Date().toISOString().substring(0,10));
+				}
+
+			if (!self.config.aptime && fs.existsSync(self.parseVariablesInString(self.config.path)) {
+				self.updateStatus(InstanceStatus.BadConfig, 'File exists, overwrite');
+					self.log('error', 'File already exists ! Recording will overwrite.');
 				}
 				else {
 					self.updateStatus(InstanceStatus.Ok);
-					fs.close(fd, (err) => {
-						if (err) {
-							self.updateStatus (InstanceStatus.BadConfig, 'Error Closing File');
-							self.log('error', 'Error closing file : '+ err);
-						}
-						else{
-							self.updateStatus(InstanceStatus.Ok);
-						}
-					});
 				}
-			});
+			}
 		}
 		catch(error) {
 			self.log('error', 'Error Opening File: ' + error);
