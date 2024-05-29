@@ -15,16 +15,15 @@ module.exports = {
 
 			let path = self.parseVariablesInString(self.config.path);
 			if (self.config.apdate)	{
-					path.append('_', new Date().toISOString().substring(0,10));
-				}
+				path.append('_', new Date().toISOString().substring(0,10));
+			}
 
 			if (!self.config.aptime && fs.existsSync(self.parseVariablesInString(self.config.path)) {
 				self.updateStatus(InstanceStatus.BadConfig, 'File exists, overwrite');
-					self.log('error', 'File already exists ! Recording will overwrite.');
-				}
-				else {
-					self.updateStatus(InstanceStatus.Ok);
-				}
+				self.log('error', 'File already exists ! Recording will overwrite.');
+			}
+			else {
+				self.updateStatus(InstanceStatus.Ok);
 			}
 		}
 		catch(error) {
