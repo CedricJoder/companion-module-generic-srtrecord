@@ -7,7 +7,7 @@ module.exports = {
 			{ name: 'Current Value', variableId: 'currentvalue'},
 			{ name: 'Recording Start Time', variableId: 'starttime'},
 		]
-
+		this.timeOffset = new Date().getTimezoneOffset()* -60000;
 		this.setVariableDefinitions(variables);
 	},
 
@@ -19,8 +19,8 @@ module.exports = {
 			variableObj['contents'] = this.filecontents;
 			variableObj['subnumber'] = this.subnumber;
 			variableObj['currentvalue'] = this.currentvalue;
-			variableObj['starttime'] = new Date(this.starttime).toISOString().substring(11,19);
-
+			variableObj['starttime'] = new Date(this.starttime + this.timeOffset).toISOString().substring(11,19);
+			
 			this.setVariableValues(variableObj);
 		}
 		catch(error) {

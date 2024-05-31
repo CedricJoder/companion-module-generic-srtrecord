@@ -28,7 +28,8 @@ module.exports = {
 			name: 'Stop Recording',
 			options: [],
 			callback: async function (action) {
-				self.stoprecording();
+				let data = await self.parseVariablesInString(self.config.data);
+				self.stoprecording(data);
 			}
 		};
 
@@ -38,7 +39,7 @@ module.exports = {
 			options: [],
 			callback: async function (action) {
 				let data = await self.parseVariablesInString(self.config.data);
-				self.writevalue(data);
+				self.writedata(data);
 			}
 		};
 

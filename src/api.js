@@ -4,14 +4,22 @@ const fs = require('fs');
 const readline = require('readline');
 
 module.exports = {
-	checkFile(filepath) {
+	checkFile(path) {
 		let self = this; // required to have reference to outer `this`
-		let path = filepath;
+		let name = path;
+		let extension = '';
 		
 		try {
-			if (self.config.apdate)	{
-				path = path.concat('_', new Date().toISOString().substring(0,10));
+			
+			self.path = path;
+			if (name.includes('.')) {
+				extension = name.slice(name.lastIndexOf('.'));
+				name = name.slice(0 , name.lastIndexOf('.'));
 			}
+			if (self.config.apdate)	{
+				name = name.concat('_', new Date(Date.now() + self.timeOffset).toISOString().substring(0,10));
+			}
+			path = name.concat(extension);
 			
 			if (self.config.verbose) {
 				self.log('debug', 'Checking File: ' + path);
@@ -32,7 +40,7 @@ module.exports = {
 			if (self.config.verbose) {
 				self.log('debug', 'Checked File : ' + path);
 			}
-			self.path = filepath;
+
 			self.checkVariables();
 		}
 		catch(error) {
@@ -54,13 +62,22 @@ module.exports = {
 				if (self.config.verbose) {
 					self.log('debug', 'Starting Recording');
 				}
-				self.starttime = new Date().getTime();
+				//append Date and Time
+				let name = self.path;
+				let extension ='';
+				if (name.includes('.')) {
+					extension = name.slice(name.lastIndexOf('.'));
+					name = name.slice(0 , name.lastIndexOf('.'));
+				}
+				
+				self.starttime = Date.now();
 				if (self.config.apdate)	{
-					self.path = self.path.concat('_', new Date(self.starttime).toISOString().substring(0,10));
+					name = name.concat('_', new Date(self.starttime + self.timeOffset).toISOString().substring(0,10));
 					}
-					if (self.config.aptime) {
-						self.path = self.path.concat('_', new Date(self.starttime).toISOString().substring(11,19).replace (';', '-'));
-					}
+				if (self.config.aptime) {
+					name = name.concat('_', new Date(self.starttime + self.timeOffset).toISOString().substring(11,19).replaceAll(':', '-'));
+				}
+				self.path = name.concat(extension)
 				self.running = true;
 				self.subnumber = 1;
 				self.previoustime = 0;
@@ -71,6 +88,7 @@ module.exports = {
 				if (self.config.verbose) {
 					self.log('debug', 'Recording to : ' + self.path);
 				}
+			}
 		}
 		catch(error) {
 			self.log('error', 'Error Starting Recording : ' + error);
@@ -80,30 +98,52 @@ module.exports = {
 	writedata(data) {
 		let self = this; // required to have reference to outer `this`
 
-		if (self.running) {
-			let time = new Date().getTime()-self.starttime;
-			self.appendFile(self.subnumber.toString().concat('\n', 
+		try {
+			if (self.running) {
+				if (self.config.verbose) {
+					self.log('debug', 'Writing data : ' + data);
+				}
+				let time = new Date().getTime()-self.starttime;
+				self.appendFile(self.subnumber.toString().concat('\n', 
 									 new Date(self.previoustime).toISOString().substring(11,23).replace('.', ','),
 									 ' --> ',
 									 new Date(time-1).toISOString().substring(11,23).replace('.', ','),
 									 '\n',
 									 data.toString(),
 									'\n\n'));
-			self.subnumber++;
-			self.previoustime = time;
-		}
-		else {
-			self.log('error', 'Recording not started');
-		}
+				self.subnumber++;
+				self.previoustime = time;
+			}
+			else {
+				self.log('error', 'Recording not started');
+			}
 
-		self.currentvalue = data;
-		self.checkVariables();
+			self.currentvalue = data;
+			self.checkVariables();
+		}
+		catch(error) {
+			self.log('error', 'Error Writing data : ' + error);
+		}
 	},
 	
 
 	stoprecording(data) {
-		self.writedata(data);
-		self.running = false;
+		let self = this;
+		try {
+			if (self.running) {
+				if (self.config.verbose) {
+					self.log('debug', 'Stopping recording : ' + self.path);
+				}
+				self.writedata(data);
+				self.running = false;
+			}
+			else {
+				self.log('error', 'Recording already stopped');
+			}
+		}
+		catch(error) {
+			self.log('error', 'Error Stopping Recording : ' + error);
+		}
 	},
 
 
