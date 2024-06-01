@@ -14,6 +14,24 @@ module.exports = {
         const backgroundColorGreen = combineRgb(0, 255, 0) // Green
         const backgroundColorOrange = combineRgb(255, 102, 0) // Orange
 
+		feedbacks.isRecording = {
+			type: 'boolean',
+			name: 'Recording is running',
+			description: 'Change colors of the bank if the recording is running',
+			defaultStyle: {
+				color: foregroundColorWhite,
+				bgcolor: backgroundColorRed,
+			},
+			options: [],
+			callback: function (feedback, bank) {
+				if (self.running) {
+					return true
+				}
+
+				return false
+			},
+		}
+
         self.setFeedbackDefinitions(feedbacks);
     }
 }
