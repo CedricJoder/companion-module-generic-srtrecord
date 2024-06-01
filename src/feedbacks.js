@@ -24,13 +24,14 @@ module.exports = {
 		},
 		options: [],
 		callback: function (feedback, bank) {
+			self.log('debug', 'testing status');
 			if (self.running) {
-				return true
+				return true;
 			}
 
-			return false
+			return false;
 		},
-	}
+	};
 
         self.setFeedbackDefinitions(feedbacks);
     }

@@ -28,8 +28,7 @@ module.exports = {
 			name: 'Stop Recording',
 			options: [],
 			callback: async function (action) {
-				let data = await self.parseVariablesInString(self.config.data);
-				self.stoprecording(data);
+				self.stoprecording();
 			}
 		};
 

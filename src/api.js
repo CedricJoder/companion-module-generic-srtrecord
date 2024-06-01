@@ -63,7 +63,7 @@ module.exports = {
 					self.log('debug', 'Starting Recording');
 				}
 				//append Date and Time
-				let name = self.path;
+				let name = self.config.path;
 				let extension ='';
 				if (name.includes('.')) {
 					extension = name.slice(name.lastIndexOf('.'));
@@ -84,6 +84,7 @@ module.exports = {
 				self.currentvalue = initialdata;
 				self.checkVariables();
 				self.clearFile(self.path);
+				self.checkFeedbacks();
 			
 				if (self.config.verbose) {
 					self.log('debug', 'Recording to : ' + self.path);
@@ -97,22 +98,26 @@ module.exports = {
 
 	writedata(data) {
 		let self = this; // required to have reference to outer `this`
-
+		let previousData = self.currentvalue;
 		try {
-			if (self.running) {
+			if (self.running && (data != previousData)) {
 				if (self.config.verbose) {
-					self.log('debug', 'Writing data : ' + data);
+					self.log('debug', 'Writing data : ' + previousData);
 				}
 				let time = new Date().getTime()-self.starttime;
-				self.appendFile(self.subnumber.toString().concat('\n', 
-									 new Date(self.previoustime).toISOString().substring(11,23).replace('.', ','),
-									 ' --> ',
-									 new Date(time-1).toISOString().substring(11,23).replace('.', ','),
-									 '\n',
-									 data.toString(),
-									'\n\n'));
-				self.subnumber++;
-				self.previoustime = time;
+
+				if (previousData != '') {
+					self.appendFile(self.subnumber.toString().concat('\n', 
+											 new Date(self.previoustime).toISOString().substring(11,23).replace('.', ','),
+											 ' --> ',
+											 new Date(time-1).toISOString().substring(11,23).replace('.', ','),
+											 '\n',
+											 previousData.toString(),
+											'\n\n'));
+					self.subnumber++;
+					self.previoustime = time;
+				}
+				self.currentvalue = data;
 			}
 			else {
 				self.log('error', 'Recording not started');
@@ -127,14 +132,14 @@ module.exports = {
 	},
 	
 
-	stoprecording(data) {
+	stoprecording() {
 		let self = this;
 		try {
 			if (self.running) {
 				if (self.config.verbose) {
 					self.log('debug', 'Stopping recording : ' + self.path);
 				}
-				self.writedata(data);
+				self.writedata('');
 				self.running = false;
 			}
 			else {
@@ -144,6 +149,7 @@ module.exports = {
 		catch(error) {
 			self.log('error', 'Error Stopping Recording : ' + error);
 		}
+		self.checkFeedbacks();
 	},
 
 
