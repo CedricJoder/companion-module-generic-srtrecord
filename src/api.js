@@ -117,7 +117,7 @@ module.exports = {
 					self.subnumber++;
 					self.previoustime = time;
 				}
-				self.currentvalue = data;
+				self.previoustime = time;
 			}
 			else {
 				self.log('error', 'Recording not started');

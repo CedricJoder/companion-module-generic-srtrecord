@@ -23,13 +23,36 @@ module.exports = {
 			bgcolor: backgroundColorRed,
 		},
 		options: [],
-		callback: function (feedback, bank) {
-			self.log('debug', 'testing status');
+		callback: async function (feedback, context) {
+			if (self.config.verbose) {
+				self.log('debug', 'Testing Status');
+			}
 			if (self.running) {
 				return true;
 			}
 
 			return false;
+		},
+	};
+
+
+	feedbacks.autoWrite = {
+		type: 'advanced',
+		name: 'Auto write on data change',
+		description: 'Automatically write new data when value changes. Workaround for variable watching',
+		/*defaultStyle: {
+			color: backgroundColorGreen,
+			//bgcolor: backgroundColorRed,
+		},*/
+		options: [],
+		callback: async function (feedback, context) {
+
+			let data = await context.parseVariablesInString(self.config.data);
+
+			//self.log('debug', 'autowrite : ' + data);
+			if (self.running) {
+				self.writedata(data);
+			}
 		},
 	};
 

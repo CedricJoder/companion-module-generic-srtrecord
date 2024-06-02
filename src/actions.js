@@ -17,8 +17,8 @@ module.exports = {
 		actions.startRecording = {
 			name: 'Start Recording',
 			options: [],
-			callback: async function (action) {
-				let data = await self.parseVariablesInString(self.config.data);
+			callback: async function (action, context) {
+				let data = await context.parseVariablesInString(self.config.data);
 				self.startrecording(data);
 			}
 		};
